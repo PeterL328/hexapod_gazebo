@@ -3,7 +3,6 @@
 
 #include <ros/ros.h>
 
-#include <std_msgs/Float64MultiArray.h>
 #include <hexapod_msgs/LegsJoints.h>
 
 class MessageRelay {

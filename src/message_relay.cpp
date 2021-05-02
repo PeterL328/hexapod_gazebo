@@ -1,4 +1,8 @@
+#include <ros/console.h>
+#include <std_msgs/Float64MultiArray.h>
+
 #include "message_relay.h"
+
 
 MessageRelay::MessageRelay(ros::NodeHandle *nh) {
     joints_command_gazebo_publisher_ = nh->advertise<std_msgs::Float64MultiArray>("joint_group_position_controller/command", 1);
@@ -41,9 +45,10 @@ void MessageRelay::send_to_joint_group_position_callback(const hexapod_msgs::Leg
 
 int main(int argc, char **argv)
 {
+    ROS_INFO("Message relay started.");
     const std::string node_name = "message_relay";
     ros::init(argc, argv, node_name);
-    ros::NodeHandle n("~");
+    ros::NodeHandle n("");
 
     MessageRelay message_relay{&n};
 
