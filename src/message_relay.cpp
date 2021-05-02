@@ -48,7 +48,7 @@ int main(int argc, char **argv)
     ROS_INFO("Message relay started.");
     const std::string node_name = "message_relay";
     ros::init(argc, argv, node_name);
-    ros::NodeHandle n("");
+    ros::NodeHandle n("~");
 
     MessageRelay message_relay{&n};
 
