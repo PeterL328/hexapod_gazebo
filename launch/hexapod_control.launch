@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Load joint controller configuration file -->
+    <rosparam file="$(find hexapod_gazebo)/config/hexapod_control.yaml" command="load"/>
+
+    <!-- Load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/Hexapod"
+        args="joint_state_controller joint_group_position_controller"/>
+
+    <!-- Convert joint command messages to messages for joint_group_position_controller -->
+    <node type="message_relay" pkg="hexapod_gazebo" name="message_relay" output="screen">
+        <remap from="/message_relay/joint_group_position_controller/command" to="/Hexapod/joint_group_position_controller/command"/>
+        <remap from="/message_relay/joints_command" to="/joints_command"/>
+    </node>
+
+    <!-- Convert joint states to TF transforms -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen">
+        <remap from="/joint_states" to="/Hexapod/joint_states"/>
+    </node>
+</launch>
